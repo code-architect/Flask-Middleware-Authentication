@@ -14,13 +14,13 @@ class FlaskAccount:
     @staticmethod
     def create():
         json_data = request.get_json()
-        logging.info('prepare dta for create a new account')
+        logging.info('prepare data for create a new account')
 
         try:
             account = Account()
             account.email = json_data['email']
-            account.password = json_data['password']
-            account.token = pbkdf2_sha512.hash(str(uuid.uuid4()))
+            account.password = pbkdf2_sha512.hash(json_data['password'])
+            account.token = str(uuid.uuid4())
             account.first_name = json_data['first_name']
             account.last_name = json_data['last_name']
             account.save()
@@ -31,11 +31,13 @@ class FlaskAccount:
             logging.info('Email already exists')
             return Response(dumps({
                 'status': 'Bad Request',
-                'msg': 'Email already exists'
+                'data': 'Email already exists',
+                "code": 400
             }), mimetype='text/json'), 400
 
         return Response(dumps({
-            'status': 'ok'
+            'status': 'ok',
+            "code": 200
         }), mimetype='text/json'), 200
 
     @staticmethod

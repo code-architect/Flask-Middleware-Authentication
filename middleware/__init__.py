@@ -25,8 +25,8 @@ class DBConnect:
                 db=os.getenv('MONGO_DATABASE'),
                 host=os.getenv('MONGO_HOST'),
                 port=int(os.getenv('MONGO_PORT')) if os.getenv('MONGO_PORT') else None,
-                username=os.getenv('MONGO_USERNAME'),
-                password=os.getenv('MONGO_PASSWORD'),
+                # username=,
+                # password=os.getenv('MONGO_PASSWORD'),
                 authentication_source=os.getenv('MONGO_AUTH_SOURCE'),
                 authentication_mechanism=os.getenv('MONGO_MECHANISM')
             )
@@ -38,5 +38,3 @@ class DBConnect:
 
             res = Response(u'Connection to mongo failed', mimetype='text/plain', status=501)
             return res(environ, start_response)
-
-
